@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0a1f3e0975044e0dbd8c61b2e5932243" Name="Diagram1">
+        <EntityTypeShape EntityType="dbRestauranteModel.sysdiagrams" Width="1.5" PointX="19.625" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbRestauranteModel.tbAlerg_Ing" Width="1.5" PointX="10.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbRestauranteModel.tbAlergenos" Width="1.5" PointX="12.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbRestauranteModel.tbIng_Plato" Width="1.5" PointX="6.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbRestauranteModel.tbIngredientes" Width="1.5" PointX="8.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbRestauranteModel.tbPlatos" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="dbRestauranteModel.FK_tbAlerg_Ing_tbAlergenos" ManuallyRouted="false" />
+        <AssociationConnector Association="dbRestauranteModel.FK_tbAlerg_Ing_tbIngredientes" ManuallyRouted="false" />
+        <AssociationConnector Association="dbRestauranteModel.FK_tbIng_Plato_tbIngredientes" ManuallyRouted="false" />
+        <AssociationConnector Association="dbRestauranteModel.FK_tbIng_Plato_tbPlatos" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

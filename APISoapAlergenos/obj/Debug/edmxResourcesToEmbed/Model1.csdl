@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbRestauranteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tbAlerg_Ing">
+    <Key>
+      <PropertyRef Name="id_Alerg_ing" />
+    </Key>
+    <Property Name="id_Alerg_ing" Type="Int32" Nullable="false" />
+    <Property Name="id_Alergeno" Type="Int32" Nullable="false" />
+    <Property Name="id_Ingrediente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbAlergenos" Relationship="Self.FK_tbAlerg_Ing_tbAlergenos" FromRole="tbAlerg_Ing" ToRole="tbAlergenos" />
+    <NavigationProperty Name="tbIngredientes" Relationship="Self.FK_tbAlerg_Ing_tbIngredientes" FromRole="tbAlerg_Ing" ToRole="tbIngredientes" />
+  </EntityType>
+  <EntityType Name="tbAlergenos">
+    <Key>
+      <PropertyRef Name="id_Alergeno" />
+    </Key>
+    <Property Name="id_Alergeno" Type="Int32" Nullable="false" />
+    <Property Name="Nombre_Alergeno" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Descripcion_Alergeno" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="tbAlerg_Ing" Relationship="Self.FK_tbAlerg_Ing_tbAlergenos" FromRole="tbAlergenos" ToRole="tbAlerg_Ing" />
+  </EntityType>
+  <EntityType Name="tbIng_Plato">
+    <Key>
+      <PropertyRef Name="id_Ing_Plato" />
+    </Key>
+    <Property Name="id_Ing_Plato" Type="Int32" Nullable="false" />
+    <Property Name="id_Ingrediente" Type="Int32" Nullable="false" />
+    <Property Name="Id_Plato" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tbIngredientes" Relationship="Self.FK_tbIng_Plato_tbIngredientes" FromRole="tbIng_Plato" ToRole="tbIngredientes" />
+    <NavigationProperty Name="tbPlatos" Relationship="Self.FK_tbIng_Plato_tbPlatos" FromRole="tbIng_Plato" ToRole="tbPlatos" />
+  </EntityType>
+  <EntityType Name="tbIngredientes">
+    <Key>
+      <PropertyRef Name="Id_Ingrediente" />
+    </Key>
+    <Property Name="Id_Ingrediente" Type="Int32" Nullable="false" />
+    <Property Name="Nombre_Ingrediente" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Descripcion_Ingrediente" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="tbAlerg_Ing" Relationship="Self.FK_tbAlerg_Ing_tbIngredientes" FromRole="tbIngredientes" ToRole="tbAlerg_Ing" />
+    <NavigationProperty Name="tbIng_Plato" Relationship="Self.FK_tbIng_Plato_tbIngredientes" FromRole="tbIngredientes" ToRole="tbIng_Plato" />
+  </EntityType>
+  <EntityType Name="tbPlatos">
+    <Key>
+      <PropertyRef Name="Id_Plato" />
+    </Key>
+    <Property Name="Id_Plato" Type="Int32" Nullable="false" />
+    <Property Name="Nombre_Plato" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Descripcion_Plato" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="tbIng_Plato" Relationship="Self.FK_tbIng_Plato_tbPlatos" FromRole="tbPlatos" ToRole="tbIng_Plato" />
+  </EntityType>
+  <Association Name="FK_tbAlerg_Ing_tbAlergenos">
+    <End Role="tbAlergenos" Type="Self.tbAlergenos" Multiplicity="1" />
+    <End Role="tbAlerg_Ing" Type="Self.tbAlerg_Ing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbAlergenos">
+        <PropertyRef Name="id_Alergeno" />
+      </Principal>
+      <Dependent Role="tbAlerg_Ing">
+        <PropertyRef Name="id_Alergeno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbAlerg_Ing_tbIngredientes">
+    <End Role="tbIngredientes" Type="Self.tbIngredientes" Multiplicity="1" />
+    <End Role="tbAlerg_Ing" Type="Self.tbAlerg_Ing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbIngredientes">
+        <PropertyRef Name="Id_Ingrediente" />
+      </Principal>
+      <Dependent Role="tbAlerg_Ing">
+        <PropertyRef Name="id_Ingrediente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbIng_Plato_tbIngredientes">
+    <End Role="tbIngredientes" Type="Self.tbIngredientes" Multiplicity="1" />
+    <End Role="tbIng_Plato" Type="Self.tbIng_Plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbIngredientes">
+        <PropertyRef Name="Id_Ingrediente" />
+      </Principal>
+      <Dependent Role="tbIng_Plato">
+        <PropertyRef Name="id_Ingrediente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbIng_Plato_tbPlatos">
+    <End Role="tbPlatos" Type="Self.tbPlatos" Multiplicity="1" />
+    <End Role="tbIng_Plato" Type="Self.tbIng_Plato" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbPlatos">
+        <PropertyRef Name="Id_Plato" />
+      </Principal>
+      <Dependent Role="tbIng_Plato">
+        <PropertyRef Name="Id_Plato" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbRestauranteEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="tbAlerg_Ing" EntityType="Self.tbAlerg_Ing" />
+    <EntitySet Name="tbAlergenos" EntityType="Self.tbAlergenos" />
+    <EntitySet Name="tbIng_Plato" EntityType="Self.tbIng_Plato" />
+    <EntitySet Name="tbIngredientes" EntityType="Self.tbIngredientes" />
+    <EntitySet Name="tbPlatos" EntityType="Self.tbPlatos" />
+    <AssociationSet Name="FK_tbAlerg_Ing_tbAlergenos" Association="Self.FK_tbAlerg_Ing_tbAlergenos">
+      <End Role="tbAlergenos" EntitySet="tbAlergenos" />
+      <End Role="tbAlerg_Ing" EntitySet="tbAlerg_Ing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbAlerg_Ing_tbIngredientes" Association="Self.FK_tbAlerg_Ing_tbIngredientes">
+      <End Role="tbIngredientes" EntitySet="tbIngredientes" />
+      <End Role="tbAlerg_Ing" EntitySet="tbAlerg_Ing" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbIng_Plato_tbIngredientes" Association="Self.FK_tbIng_Plato_tbIngredientes">
+      <End Role="tbIngredientes" EntitySet="tbIngredientes" />
+      <End Role="tbIng_Plato" EntitySet="tbIng_Plato" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbIng_Plato_tbPlatos" Association="Self.FK_tbIng_Plato_tbPlatos">
+      <End Role="tbPlatos" EntitySet="tbPlatos" />
+      <End Role="tbIng_Plato" EntitySet="tbIng_Plato" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
